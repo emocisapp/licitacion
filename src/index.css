@@ -1,0 +1,42 @@
+@import "./theme/theme.css";
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.app-shell {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+.app-header {
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 24px;
+  padding-bottom: 12px;
+}
+
+.licitaciones-table-wrapper {
+  overflow-x: auto;
+}
+
+.licitaciones-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.licitaciones-table th,
+.licitaciones-table td {
+  border: 1px solid var(--border);
+  padding: 8px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.licitaciones-table th {
+  background: var(--surface);
+}

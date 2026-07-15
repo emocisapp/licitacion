@@ -1,0 +1,92 @@
+{
+  "name": "SECOP II - Licitaciones Obra Civil Palmira",
+  "nodes": [
+    {
+      "name": "Trigger diario 6AM",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [0, 0],
+      "parameters": {
+        "rule": {
+          "interval": [
+            { "field": "days", "triggerAtHour": 6, "triggerAtMinute": 0 }
+          ]
+        }
+      }
+    },
+    {
+      "name": "GET SECOP II (SODA)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [220, 0],
+      "parameters": {
+        "method": "GET",
+        "url": "https://www.datos.gov.co/resource/p6dx-8zbt.json",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            { "name": "$limit", "value": "1000" },
+            { "name": "$order", "value": "fecha_de_publicacion_del DESC" },
+            {
+              "name": "$where",
+              "value": "departamento_entidad = 'Valle del Cauca' AND ciudad_entidad = 'Palmira' AND (upper(descripci_n_del_procedimiento) like '%OBRA%' OR upper(descripci_n_del_procedimiento) like '%PARQUE%' OR upper(descripci_n_del_procedimiento) like '%ALUMBRADO%' OR upper(descripci_n_del_procedimiento) like '%PAVIMENTA%' OR upper(descripci_n_del_procedimiento) like '%VIA%' OR upper(descripci_n_del_procedimiento) like '%CALLE%' OR upper(nombre_del_procedimiento) like '%OBRA%' OR upper(nombre_del_procedimiento) like '%PARQUE%' OR upper(nombre_del_procedimiento) like '%ALUMBRADO%' OR upper(nombre_del_procedimiento) like '%PAVIMENTA%' OR upper(nombre_del_procedimiento) like '%VIA%' OR upper(nombre_del_procedimiento) like '%CALLE%')"
+            }
+          ]
+        },
+        "options": {}
+      }
+    },
+    {
+      "name": "Mapear a esquema Supabase",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [440, 0],
+      "parameters": {
+        "language": "javaScript",
+        "mode": "runOnceForAllItems",
+        "jsCode": "const items = $input.all();\n\nconst records = items\n  .map(item => item.json)\n  .filter(p => p.id_del_proceso)\n  .map(p => ({\n    id_proceso: p.id_del_proceso,\n    entidad_compradora: p.entidad || null,\n    objeto: p.descripci_n_del_procedimiento || p.nombre_del_procedimiento || null,\n    cuantia: p.precio_base ? Number(p.precio_base) : null,\n    estado: p.estado_del_procedimiento || null,\n    fecha_publicacion: p.fecha_de_publicacion_del || null,\n    fecha_cierre: p.fecha_de_recepcion_de || null,\n    enlace: `https://community.secop.gov.co/Public/Tendering/OpportunityDetail/Index?noticeUID=${p.id_del_proceso}&isFromPublicArea=True&isModal=False`\n  }));\n\nreturn [{ json: { records } }];"
+      }
+    },
+    {
+      "name": "Supabase Upsert",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.4,
+      "position": [660, 0],
+      "parameters": {
+        "method": "POST",
+        "url": "https://YOUR-PROJECT-REF.supabase.co/rest/v1/licitaciones_secop",
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [{ "name": "on_conflict", "value": "id_proceso" }]
+        },
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            { "name": "apikey", "value": "YOUR_SUPABASE_SERVICE_ROLE_KEY" },
+            { "name": "Authorization", "value": "Bearer YOUR_SUPABASE_SERVICE_ROLE_KEY" },
+            { "name": "Prefer", "value": "resolution=merge-duplicates,return=minimal" }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ $json.records }}",
+        "options": {}
+      }
+    }
+  ],
+  "connections": {
+    "Trigger diario 6AM": {
+      "main": [[{ "node": "GET SECOP II (SODA)", "type": "main", "index": 0 }]]
+    },
+    "GET SECOP II (SODA)": {
+      "main": [[{ "node": "Mapear a esquema Supabase", "type": "main", "index": 0 }]]
+    },
+    "Mapear a esquema Supabase": {
+      "main": [[{ "node": "Supabase Upsert", "type": "main", "index": 0 }]]
+    }
+  },
+  "pinData": {},
+  "meta": {
+    "instanceId": "secop-palmira-obra-civil"
+  }
+}

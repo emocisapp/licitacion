@@ -9,17 +9,17 @@ export function BusquedaPage() {
 
   return (
     <section>
-      <h1>Búsqueda personalizada en SECOP II</h1>
-      <p className="busqueda-descripcion">
+      <h1 className="mb-2 text-2xl font-semibold text-slate-900">Búsqueda personalizada en SECOP II</h1>
+      <p className="mb-4 text-sm text-slate-500">
         Define tus propios criterios y consulta directamente la API de Datos Abiertos.
         Estos resultados son en vivo y no se guardan.
       </p>
       <BusquedaForm filtrosIniciales={FILTROS_INICIALES} loading={loading} onBuscar={buscar} />
       {loading && <LoadingSpinner />}
-      {error && <p role="alert">Error al buscar: {error}</p>}
+      {error && <p className="text-sm text-red-600">Error al buscar: {error}</p>}
       {!loading && !error && buscado && (
         <>
-          <p className="licitaciones-count">{resultados.length} resultado(s)</p>
+          <p className="mb-2 text-sm text-slate-500">{resultados.length} resultado(s)</p>
           <LicitacionesTable licitaciones={resultados} />
         </>
       )}

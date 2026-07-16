@@ -48,13 +48,15 @@ export function LicitacionesPage() {
 
   return (
     <section>
-      <h1>Licitaciones SECOP II — Obra Civil, Palmira (Valle del Cauca)</h1>
+      <h1 className="mb-4 text-2xl font-semibold text-slate-900">
+        Licitaciones SECOP II — Obra Civil, Palmira (Valle del Cauca)
+      </h1>
       {loading && <LoadingSpinner />}
-      {error && <p role="alert">Error al cargar licitaciones: {error}</p>}
+      {error && <p className="text-sm text-red-600">Error al cargar licitaciones: {error}</p>}
       {!loading && !error && (
         <>
           <LicitacionesFiltros filtros={filtros} estadosDisponibles={estadosDisponibles} onChange={setFiltros} />
-          <p className="licitaciones-count">
+          <p className="mb-2 text-sm text-slate-500">
             {filtradas.length} resultado(s){filtradas.length !== licitaciones.length && ` de ${licitaciones.length}`}
           </p>
           <LicitacionesTable licitaciones={pagina} />

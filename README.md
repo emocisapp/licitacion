@@ -26,7 +26,7 @@ src/
 ├── pages/           # DashboardPage: pestañas entre ambos módulos
 ├── services/        # supabaseClient.ts
 ├── store/           # (reservado para estado global futuro)
-├── theme/           # Variables de tema (theme.css)
+├── theme/           # (reservado; el tema vive en Tailwind, ver abajo)
 ├── types/           # Interfaces (Licitacion, LicitacionResumen)
 ├── utils/           # format.ts (moneda/fechas/urgencia de cierre)
 └── App.tsx
@@ -45,6 +45,14 @@ Supabase (`supabase_schema.sql`) y el workflow de n8n
   llama **directamente** a la API de Datos Abiertos (SECOP soporta CORS
   público). No pasa por n8n ni se guarda en Supabase — es solo para
   explorar en el momento.
+
+## Estilos
+
+La interfaz usa [Tailwind CSS v4](https://tailwindcss.com/) (vía `@tailwindcss/vite`,
+configurado en `vite.config.ts`) con una paleta clara (slate/indigo). Todo el
+estilo vive como clases utilitarias directamente en los componentes — no hay
+hojas de estilo separadas por módulo. `src/index.css` solo contiene el
+`@import "tailwindcss";`.
 
 ## Configuración
 

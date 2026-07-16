@@ -15,13 +15,17 @@ create table if not exists public.licitaciones_secop (
 );
 
 -- Mantiene actualizado_en al día en cada upsert/update
+-- search_path fijo en '' para evitar search-path hijacking (recomendación del linter de Supabase)
 create or replace function public.set_actualizado_en()
-returns trigger as $$
+returns trigger
+language plpgsql
+set search_path = ''
+as $$
 begin
   new.actualizado_en = now();
   return new;
 end;
-$$ language plpgsql;
+$$;
 
 drop trigger if exists trg_licitaciones_secop_actualizado_en on public.licitaciones_secop;
 create trigger trg_licitaciones_secop_actualizado_en

@@ -2,6 +2,7 @@ import type { LicitacionResumen } from "../../../types/licitacion";
 import type { BusquedaFiltros } from "../types";
 
 const SECOP_ENDPOINT = "https://www.datos.gov.co/resource/p6dx-8zbt.json";
+const ANOS_ATRAS_PUBLICACION = 1;
 
 interface SecopProceso {
   id_del_proceso?: string;
@@ -19,15 +20,24 @@ function escapeSoql(value: string): string {
   return value.replace(/'/g, "''");
 }
 
+function fechaCorte(): string {
+  const fecha = new Date();
+  fecha.setFullYear(fecha.getFullYear() - ANOS_ATRAS_PUBLICACION);
+  return fecha.toISOString().slice(0, 10);
+}
+
 function construirWhere(filtros: BusquedaFiltros): string {
   const clausulas: string[] = [];
 
-  if (filtros.departamento.trim()) {
-    clausulas.push(`departamento_entidad = '${escapeSoql(filtros.departamento.trim())}'`);
+  const departamentos = filtros.departamentos.map((d) => d.trim()).filter(Boolean);
+  if (departamentos.length > 0) {
+    const porDepartamento = departamentos.map(
+      (d) => `departamento_entidad = '${escapeSoql(d)}'`
+    );
+    clausulas.push(`(${porDepartamento.join(" OR ")})`);
   }
-  if (filtros.municipio.trim()) {
-    clausulas.push(`ciudad_entidad = '${escapeSoql(filtros.municipio.trim())}'`);
-  }
+
+  clausulas.push(`fecha_de_publicacion_del >= '${fechaCorte()}'`);
 
   const palabras = filtros.palabrasClave.map((p) => p.trim()).filter(Boolean);
   if (palabras.length > 0) {

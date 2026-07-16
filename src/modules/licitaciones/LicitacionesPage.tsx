@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { LoadingSpinner } from "../../components/LoadingSpinner";
-import { CargarMas } from "../../components/CargarMas";
+import { Pagination } from "../../components/Pagination";
 import { normalizarTexto } from "../../utils/format";
 import { useLicitaciones } from "./hooks/useLicitaciones";
 import { LicitacionesTable } from "./components/LicitacionesTable";
@@ -12,7 +12,7 @@ const TAMANO_PAGINA = 25;
 export function LicitacionesPage() {
   const { licitaciones, loading, error } = useLicitaciones();
   const [filtros, setFiltros] = useState(FILTROS_LICITACIONES_INICIALES);
-  const [visibles, setVisibles] = useState(TAMANO_PAGINA);
+  const [pagina, setPagina] = useState(1);
 
   const estadosDisponibles = useMemo(() => {
     const estados = new Set<string>();
@@ -41,15 +41,17 @@ export function LicitacionesPage() {
   }, [licitaciones, filtros]);
 
   useEffect(() => {
-    setVisibles(TAMANO_PAGINA);
+    setPagina(1);
   }, [filtros]);
 
-  const pagina = filtradas.slice(0, visibles);
+  const totalPaginas = Math.max(1, Math.ceil(filtradas.length / TAMANO_PAGINA));
+  const inicio = (pagina - 1) * TAMANO_PAGINA;
+  const filasPagina = filtradas.slice(inicio, inicio + TAMANO_PAGINA);
 
   return (
     <section>
       <h1 className="mb-4 text-2xl font-semibold text-slate-900">
-        Licitaciones SECOP II — Obra Civil, Palmira (Valle del Cauca)
+        Licitaciones SECOP II — Obra Civil (Valle del Cauca y Cauca)
       </h1>
       {loading && <LoadingSpinner />}
       {error && <p className="text-sm text-red-600">Error al cargar licitaciones: {error}</p>}
@@ -59,8 +61,8 @@ export function LicitacionesPage() {
           <p className="mb-2 text-sm text-slate-500">
             {filtradas.length} resultado(s){filtradas.length !== licitaciones.length && ` de ${licitaciones.length}`}
           </p>
-          <LicitacionesTable licitaciones={pagina} />
-          <CargarMas visibles={visibles} total={filtradas.length} onCargarMas={() => setVisibles((v) => v + TAMANO_PAGINA)} />
+          <LicitacionesTable licitaciones={filasPagina} />
+          <Pagination paginaActual={pagina} totalPaginas={totalPaginas} onCambiarPagina={setPagina} />
         </>
       )}
     </section>

@@ -1,8 +1,9 @@
-# Licitaciones SECOP II — Palmira, Valle del Cauca
+# Licitaciones Obra Civil SECOP II
 
 Panel para monitorear licitaciones públicas de obra civil (parques, alumbrado,
-calles, vías, pavimentación) en Palmira, Valle del Cauca, extraídas de SECOP II
-(Datos Abiertos Colombia) vía n8n y almacenadas en Supabase.
+calles, vías, pavimentación) en los departamentos de **Valle del Cauca y
+Cauca**, publicadas en el último año, extraídas de SECOP II (Datos Abiertos
+Colombia) vía n8n y almacenadas en Supabase.
 
 ## Estructura del proyecto
 
@@ -34,14 +35,20 @@ src/
 
 `docs/` contiene los artefactos de la automatización: el esquema SQL de
 Supabase (`supabase_schema.sql`) y el workflow de n8n
-(`n8n_workflow_secop_palmira.json`).
+(`n8n_workflow_secop_obra_civil.json`).
+
+Ambos modos de búsqueda filtran por **departamento (Valle del Cauca o
+Cauca)** y por **fecha de publicación en el último año**, para no mostrar
+procesos ya vencidos o cerrados hace tiempo.
 
 ## Los dos modos de búsqueda
 
 - **Licitaciones guardadas** (`modules/licitaciones`): lee lo que n8n ya
   guardó en Supabase (corre automáticamente todos los días a las 6 AM).
-- **Búsqueda personalizada** (`modules/busqueda`): la persona define
-  departamento, municipio y palabras clave desde el panel, y el navegador
+  Incluye buscador por entidad/objeto, filtro por estado y rango de
+  cuantía, y paginación por número de página.
+- **Búsqueda personalizada** (`modules/busqueda`): la persona define sus
+  propios departamentos y palabras clave desde el panel, y el navegador
   llama **directamente** a la API de Datos Abiertos (SECOP soporta CORS
   público). No pasa por n8n ni se guarda en Supabase — es solo para
   explorar en el momento.
@@ -65,7 +72,7 @@ hojas de estilo separadas por módulo. `src/index.css` solo contiene el
    ```
 
 2. Ejecuta `docs/supabase_schema.sql` en el SQL Editor de Supabase.
-3. Importa `docs/n8n_workflow_secop_palmira.json` en n8n y configura la
+3. Importa `docs/n8n_workflow_secop_obra_civil.json` en n8n y configura la
    `service_role key` de Supabase en el nodo "Supabase Upsert".
 
 ## Desarrollo

@@ -13,17 +13,20 @@ const campoInput =
   "w-full rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm text-slate-800 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500";
 
 export function BusquedaForm({ filtrosIniciales, loading, onBuscar }: BusquedaFormProps) {
-  const [departamento, setDepartamento] = useState(filtrosIniciales.departamento);
-  const [municipio, setMunicipio] = useState(filtrosIniciales.municipio);
+  const [departamentosTexto, setDepartamentosTexto] = useState(filtrosIniciales.departamentos.join(", "));
   const [palabrasTexto, setPalabrasTexto] = useState(filtrosIniciales.palabrasClave.join(", "));
 
   function handleSubmit(event: FormEvent) {
     event.preventDefault();
+    const departamentos = departamentosTexto
+      .split(",")
+      .map((d) => d.trim())
+      .filter(Boolean);
     const palabrasClave = palabrasTexto
       .split(",")
       .map((p) => p.trim())
       .filter(Boolean);
-    onBuscar({ departamento, municipio, palabrasClave });
+    onBuscar({ departamentos, palabrasClave });
   }
 
   return (
@@ -31,27 +34,15 @@ export function BusquedaForm({ filtrosIniciales, loading, onBuscar }: BusquedaFo
       className="mb-5 flex flex-wrap items-end gap-4 rounded-lg border border-slate-200 bg-white p-4 shadow-sm"
       onSubmit={handleSubmit}
     >
-      <div>
-        <label htmlFor="departamento" className={campoLabel}>
-          Departamento
+      <div className="min-w-[220px]">
+        <label htmlFor="departamentos" className={campoLabel}>
+          Departamentos (separados por coma)
         </label>
         <input
-          id="departamento"
+          id="departamentos"
           type="text"
-          value={departamento}
-          onChange={(e) => setDepartamento(e.target.value)}
-          className={campoInput}
-        />
-      </div>
-      <div>
-        <label htmlFor="municipio" className={campoLabel}>
-          Municipio
-        </label>
-        <input
-          id="municipio"
-          type="text"
-          value={municipio}
-          onChange={(e) => setMunicipio(e.target.value)}
+          value={departamentosTexto}
+          onChange={(e) => setDepartamentosTexto(e.target.value)}
           className={campoInput}
         />
       </div>

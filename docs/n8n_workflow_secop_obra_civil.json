@@ -1,5 +1,5 @@
 {
-  "name": "SECOP II - Licitaciones Obra Civil Palmira",
+  "name": "SECOP II - Licitaciones Obra Civil (Valle del Cauca y Cauca)",
   "nodes": [
     {
       "name": "Trigger diario 6AM",
@@ -29,7 +29,7 @@
             { "name": "$order", "value": "fecha_de_publicacion_del DESC" },
             {
               "name": "$where",
-              "value": "departamento_entidad = 'Valle del Cauca' AND ciudad_entidad = 'Palmira' AND (upper(descripci_n_del_procedimiento) like '%OBRA CIVIL%' OR upper(descripci_n_del_procedimiento) like '%OBRAS CIVILES%' OR upper(descripci_n_del_procedimiento) like '%PAVIMENTA%' OR upper(descripci_n_del_procedimiento) like '%ALUMBRADO PUBLICO%' OR upper(descripci_n_del_procedimiento) like '%MALLA VIAL%' OR upper(descripci_n_del_procedimiento) like '%INFRAESTRUCTURA VIAL%' OR upper(descripci_n_del_procedimiento) like '%CONSTRUCCION DE VIA%' OR upper(descripci_n_del_procedimiento) like '%MEJORAMIENTO DE VIA%' OR upper(descripci_n_del_procedimiento) like '%MANTENIMIENTO DE VIA%' OR upper(descripci_n_del_procedimiento) like '%CONSTRUCCION DE PARQUE%' OR upper(descripci_n_del_procedimiento) like '%ADECUACION DE PARQUE%' OR upper(descripci_n_del_procedimiento) like '%MANTENIMIENTO DE PARQUE%' OR upper(descripci_n_del_procedimiento) like '%ESPACIO PUBLICO%' OR upper(nombre_del_procedimiento) like '%OBRA CIVIL%' OR upper(nombre_del_procedimiento) like '%OBRAS CIVILES%' OR upper(nombre_del_procedimiento) like '%PAVIMENTA%' OR upper(nombre_del_procedimiento) like '%ALUMBRADO PUBLICO%' OR upper(nombre_del_procedimiento) like '%MALLA VIAL%' OR upper(nombre_del_procedimiento) like '%INFRAESTRUCTURA VIAL%' OR upper(nombre_del_procedimiento) like '%CONSTRUCCION DE VIA%' OR upper(nombre_del_procedimiento) like '%MEJORAMIENTO DE VIA%' OR upper(nombre_del_procedimiento) like '%MANTENIMIENTO DE VIA%' OR upper(nombre_del_procedimiento) like '%CONSTRUCCION DE PARQUE%' OR upper(nombre_del_procedimiento) like '%ADECUACION DE PARQUE%' OR upper(nombre_del_procedimiento) like '%MANTENIMIENTO DE PARQUE%' OR upper(nombre_del_procedimiento) like '%ESPACIO PUBLICO%')"
+              "value": "=(departamento_entidad = 'Valle del Cauca' OR departamento_entidad = 'Cauca') AND fecha_de_publicacion_del >= '{{ $now.minus({years: 1}).toFormat('yyyy-MM-dd') }}' AND (upper(descripci_n_del_procedimiento) like '%OBRA CIVIL%' OR upper(descripci_n_del_procedimiento) like '%OBRAS CIVILES%' OR upper(descripci_n_del_procedimiento) like '%PAVIMENTA%' OR upper(descripci_n_del_procedimiento) like '%ALUMBRADO PUBLICO%' OR upper(descripci_n_del_procedimiento) like '%MALLA VIAL%' OR upper(descripci_n_del_procedimiento) like '%INFRAESTRUCTURA VIAL%' OR upper(descripci_n_del_procedimiento) like '%CONSTRUCCION DE VIA%' OR upper(descripci_n_del_procedimiento) like '%MEJORAMIENTO DE VIA%' OR upper(descripci_n_del_procedimiento) like '%MANTENIMIENTO DE VIA%' OR upper(descripci_n_del_procedimiento) like '%CONSTRUCCION DE PARQUE%' OR upper(descripci_n_del_procedimiento) like '%ADECUACION DE PARQUE%' OR upper(descripci_n_del_procedimiento) like '%MANTENIMIENTO DE PARQUE%' OR upper(descripci_n_del_procedimiento) like '%ESPACIO PUBLICO%' OR upper(nombre_del_procedimiento) like '%OBRA CIVIL%' OR upper(nombre_del_procedimiento) like '%OBRAS CIVILES%' OR upper(nombre_del_procedimiento) like '%PAVIMENTA%' OR upper(nombre_del_procedimiento) like '%ALUMBRADO PUBLICO%' OR upper(nombre_del_procedimiento) like '%MALLA VIAL%' OR upper(nombre_del_procedimiento) like '%INFRAESTRUCTURA VIAL%' OR upper(nombre_del_procedimiento) like '%CONSTRUCCION DE VIA%' OR upper(nombre_del_procedimiento) like '%MEJORAMIENTO DE VIA%' OR upper(nombre_del_procedimiento) like '%MANTENIMIENTO DE VIA%' OR upper(nombre_del_procedimiento) like '%CONSTRUCCION DE PARQUE%' OR upper(nombre_del_procedimiento) like '%ADECUACION DE PARQUE%' OR upper(nombre_del_procedimiento) like '%MANTENIMIENTO DE PARQUE%' OR upper(nombre_del_procedimiento) like '%ESPACIO PUBLICO%')"
             }
           ]
         },
@@ -87,6 +87,6 @@
   },
   "pinData": {},
   "meta": {
-    "instanceId": "secop-palmira-obra-civil"
+    "instanceId": "secop-valle-cauca-obra-civil"
   }
 }

@@ -1,12 +1,10 @@
 export interface BusquedaFiltros {
-  departamento: string;
-  municipio: string;
+  departamentos: string[];
   palabrasClave: string[];
 }
 
 export const FILTROS_INICIALES: BusquedaFiltros = {
-  departamento: "Valle del Cauca",
-  municipio: "Palmira",
+  departamentos: ["Valle del Cauca", "Cauca"],
   palabrasClave: [
     "OBRA CIVIL",
     "OBRAS CIVILES",

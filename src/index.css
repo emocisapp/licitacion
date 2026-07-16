@@ -40,3 +40,128 @@ body {
 .licitaciones-table th {
   background: var(--surface);
 }
+
+.licitaciones-count {
+  color: var(--neutral-fg);
+  font-size: 14px;
+  margin: 0 0 8px;
+}
+
+.fila-urgencia--proxima td {
+  background: var(--warning-bg);
+}
+
+.fila-urgencia--vencida td {
+  opacity: 0.6;
+}
+
+.estado-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.estado-badge--abierto {
+  color: var(--success-fg);
+  background: var(--success-bg);
+}
+
+.estado-badge--evaluacion {
+  color: var(--warning-fg);
+  background: var(--warning-bg);
+}
+
+.estado-badge--cerrado {
+  color: var(--neutral-fg);
+  background: var(--neutral-bg);
+}
+
+.estado-badge--cancelado {
+  color: var(--danger-fg);
+  background: var(--danger-bg);
+}
+
+.estado-badge--borrador,
+.estado-badge--default {
+  color: var(--neutral-fg);
+  background: var(--neutral-bg);
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.tabs__item {
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text);
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.tabs__item--active {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.busqueda-descripcion {
+  color: var(--neutral-fg);
+  margin-bottom: 16px;
+}
+
+.busqueda-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+  margin-bottom: 20px;
+  padding: 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.busqueda-form__campo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 14px;
+}
+
+.busqueda-form__campo--ancho {
+  flex: 1 1 100%;
+}
+
+.busqueda-form input,
+.busqueda-form textarea {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font: inherit;
+  background: var(--bg);
+  color: var(--text);
+  resize: vertical;
+}
+
+.busqueda-form button {
+  border: none;
+  border-radius: 6px;
+  background: var(--accent);
+  color: #fff;
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.busqueda-form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

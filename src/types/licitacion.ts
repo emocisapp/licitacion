@@ -1,4 +1,4 @@
-export interface Licitacion {
+export interface LicitacionResumen {
   id_proceso: string;
   entidad_compradora: string | null;
   objeto: string | null;
@@ -7,6 +7,9 @@ export interface Licitacion {
   fecha_publicacion: string | null;
   fecha_cierre: string | null;
   enlace: string | null;
+}
+
+export interface Licitacion extends LicitacionResumen {
   creado_en: string;
   actualizado_en: string;
 }

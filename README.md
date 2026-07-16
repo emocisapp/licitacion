@@ -13,23 +13,38 @@ src/
 ├── hooks/           # Custom hooks globales
 ├── layouts/         # Envolturas de página (MainLayout)
 ├── modules/
-│   └── licitaciones/
-│       ├── components/  # LicitacionesTable
-│       ├── hooks/       # useLicitaciones
-│       ├── services/    # licitacionesService (consulta a Supabase)
-│       └── LicitacionesPage.tsx
-├── pages/           # DashboardPage: combina layout + módulo
+│   ├── licitaciones/
+│   │   ├── components/  # LicitacionesTable (compartida con busqueda/)
+│   │   ├── hooks/       # useLicitaciones
+│   │   ├── services/    # licitacionesService (consulta a Supabase)
+│   │   └── LicitacionesPage.tsx
+│   └── busqueda/
+│       ├── components/  # BusquedaForm
+│       ├── hooks/       # useBusquedaSecop
+│       ├── services/    # secopService (llama a SECOP directo desde el navegador)
+│       └── BusquedaPage.tsx
+├── pages/           # DashboardPage: pestañas entre ambos módulos
 ├── services/        # supabaseClient.ts
 ├── store/           # (reservado para estado global futuro)
 ├── theme/           # Variables de tema (theme.css)
-├── types/           # Interfaces (Licitacion)
-├── utils/           # format.ts (formateo de moneda/fechas)
+├── types/           # Interfaces (Licitacion, LicitacionResumen)
+├── utils/           # format.ts (moneda/fechas/urgencia de cierre)
 └── App.tsx
 ```
 
 `docs/` contiene los artefactos de la automatización: el esquema SQL de
 Supabase (`supabase_schema.sql`) y el workflow de n8n
 (`n8n_workflow_secop_palmira.json`).
+
+## Los dos modos de búsqueda
+
+- **Licitaciones guardadas** (`modules/licitaciones`): lee lo que n8n ya
+  guardó en Supabase (corre automáticamente todos los días a las 6 AM).
+- **Búsqueda personalizada** (`modules/busqueda`): la persona define
+  departamento, municipio y palabras clave desde el panel, y el navegador
+  llama **directamente** a la API de Datos Abiertos (SECOP soporta CORS
+  público). No pasa por n8n ni se guarda en Supabase — es solo para
+  explorar en el momento.
 
 ## Configuración
 

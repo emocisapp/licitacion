@@ -13,7 +13,6 @@ export function LicitacionesTable({ licitaciones }: LicitacionesTableProps) {
 
   return (
     <div className="licitaciones-table-wrapper">
-      <p className="licitaciones-count">{licitaciones.length} resultado(s)</p>
       <table className="licitaciones-table">
         <thead>
           <tr>

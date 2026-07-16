@@ -16,6 +16,15 @@ export function formatDate(value: string | null): string {
   });
 }
 
+const DIACRITICOS = new RegExp(
+  "[" + String.fromCharCode(0x0300) + "-" + String.fromCharCode(0x036f) + "]",
+  "g"
+);
+
+export function normalizarTexto(valor: string): string {
+  return valor.normalize("NFD").replace(DIACRITICOS, "").toLowerCase();
+}
+
 export type UrgenciaCierre = "vencida" | "proxima" | "normal" | "sin_fecha";
 
 const DIAS_CIERRE_PROXIMO = 5;

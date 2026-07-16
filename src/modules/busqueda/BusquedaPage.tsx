@@ -17,7 +17,12 @@ export function BusquedaPage() {
       <BusquedaForm filtrosIniciales={FILTROS_INICIALES} loading={loading} onBuscar={buscar} />
       {loading && <LoadingSpinner />}
       {error && <p role="alert">Error al buscar: {error}</p>}
-      {!loading && !error && buscado && <LicitacionesTable licitaciones={resultados} />}
+      {!loading && !error && buscado && (
+        <>
+          <p className="licitaciones-count">{resultados.length} resultado(s)</p>
+          <LicitacionesTable licitaciones={resultados} />
+        </>
+      )}
     </section>
   );
 }

@@ -165,3 +165,54 @@ body {
   opacity: 0.6;
   cursor: not-allowed;
 }
+
+.licitaciones-filtros {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+  margin-bottom: 12px;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.licitaciones-filtros__campo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 14px;
+}
+
+.licitaciones-filtros__campo--ancho {
+  flex: 1 1 240px;
+}
+
+.licitaciones-filtros input,
+.licitaciones-filtros select {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 6px 10px;
+  font: inherit;
+  background: var(--bg);
+  color: var(--text);
+}
+
+.cargar-mas {
+  margin-top: 12px;
+}
+
+.cargar-mas button {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--text);
+  padding: 8px 16px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.cargar-mas button:hover {
+  background: var(--surface);
+}
